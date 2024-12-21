@@ -10,6 +10,7 @@ import DecodeAudio from "./Components/DecodeAudio";
 import Video from "./Components/Video";
 import Image from "./Components/Image";
 import Audio from "./Components/Audio";
+import About from "./Components/About";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home1 />} />
+          <Route path="/about" element={<About/>} />
           <Route path="/image" element={<Image />} />
           <Route path="/encode" element={<Encode />} />
           <Route path="/decode" element={<Decode />} />
