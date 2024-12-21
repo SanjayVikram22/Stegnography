@@ -1,5 +1,7 @@
+// Encode.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Encode() {
   const [image, setImage] = useState(null);
@@ -48,12 +50,12 @@ export default function Encode() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-stone-400 p-6 relative">
-      <a
-        href="/Image"
+      <Link
+        to="/image"
         className="absolute top-3 right-3 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded shadow"
       >
         Image
-      </a>
+      </Link>
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 tracking-tight">
         Encode
       </h1>
