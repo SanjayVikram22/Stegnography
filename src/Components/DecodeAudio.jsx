@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Import Link
 
 export default function DecodeAudio() {
   const [audio, setAudio] = useState(null);
@@ -78,12 +79,13 @@ export default function DecodeAudio() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-stone-400 p-6 relative">
-      <a
-        href="/Audio"
+      {/* Replaced <a> with <Link> and corrected the 'to' attribute */}
+      <Link
+        to="/audio"
         className="absolute top-3 right-3 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded shadow"
       >
         Audio
-      </a>
+      </Link>
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 tracking-tight">
         Decode Audio
       </h1>

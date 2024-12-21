@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Import Link
 
 export default function EncodeAudio() {
   const [audio, setAudio] = useState(null);
@@ -18,7 +19,9 @@ export default function EncodeAudio() {
 
   const handleEncode = async () => {
     if (!audio || !text || !secretCode) {
-      alert("Please upload an audio file, enter the secret message, and provide the secret code.");
+      alert(
+        "Please upload an audio file, enter the secret message, and provide the secret code."
+      );
       return;
     }
 
@@ -28,16 +31,22 @@ export default function EncodeAudio() {
     formData.append("key", secretCode);
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/encode_audio", formData, {
-        responseType: "blob", // Important for handling binary data
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        },
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:5000/encode_audio",
+        formData,
+        {
+          responseType: "blob", // Important for handling binary data
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percentCompleted);
+          },
+        }
+      );
 
       // Create a URL for the downloaded audio
       const audioURL = window.URL.createObjectURL(new Blob([response.data]));
@@ -45,7 +54,10 @@ export default function EncodeAudio() {
       setError("");
     } catch (err) {
       console.error("Error encoding the audio:", err);
-      setError(err.response?.data?.error || "Failed to encode the audio. Please try again.");
+      setError(
+        err.response?.data?.error ||
+          "Failed to encode the audio. Please try again."
+      );
       setEncodedAudio(null);
     }
   };
@@ -61,12 +73,13 @@ export default function EncodeAudio() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-stone-400 p-6 relative">
-      <a
-        href="/Audio"
+      {/* Replaced <a> with <Link> and corrected the 'to' attribute */}
+      <Link
+        to="/audio"
         className="absolute top-3 right-3 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded shadow"
       >
         Audio
-      </a>
+      </Link>
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 tracking-tight">
         Encode Audio
       </h1>
@@ -94,7 +107,8 @@ export default function EncodeAudio() {
                 ></path>
               </svg>
               <p className="mb-2 text-sm text-gray-500">
-                <span className="font-semibold">Click to upload</span> or drag and drop
+                <span className="font-semibold">Click to upload</span> or drag
+                and drop
               </p>
             </div>
             <input
@@ -109,7 +123,11 @@ export default function EncodeAudio() {
         {audio && (
           <div className="mt-6">
             <p className="font-semibold text-lg text-gray-700">Preview:</p>
-            <audio src={URL.createObjectURL(audio)} controls className="w-full" />
+            <audio
+              src={URL.createObjectURL(audio)}
+              controls
+              className="w-full"
+            />
           </div>
         )}
       </div>
@@ -143,11 +161,15 @@ export default function EncodeAudio() {
       <button
         onClick={handleEncode}
         className={`bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 ${
-          uploadProgress > 0 && uploadProgress < 100 ? "opacity-50 cursor-not-allowed" : ""
+          uploadProgress > 0 && uploadProgress < 100
+            ? "opacity-50 cursor-not-allowed"
+            : ""
         }`}
         disabled={uploadProgress > 0 && uploadProgress < 100}
       >
-        {uploadProgress > 0 && uploadProgress < 100 ? `Encoding... (${uploadProgress}%)` : "Encode"}
+        {uploadProgress > 0 && uploadProgress < 100
+          ? `Encoding... (${uploadProgress}%)`
+          : "Encode"}
       </button>
 
       {encodedAudio && (
@@ -157,7 +179,11 @@ export default function EncodeAudio() {
           </h3>
           <audio src={encodedAudio} controls className="w-full" />
           <br />
-          <a href={encodedAudio} download="encoded_audio.wav" className="mt-2 inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+          <a
+            href={encodedAudio}
+            download="encoded_audio.wav"
+            className="mt-2 inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+          >
             Download Encoded Audio
           </a>
         </div>

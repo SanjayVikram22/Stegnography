@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Import Link
 
 export default function EncodeVideo() {
   const [video, setVideo] = useState(null);
@@ -48,12 +49,13 @@ export default function EncodeVideo() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-stone-400 p-6 relative">
-      <a
-        href="/video"
+      {/* Replaced <a> with <Link> */}
+      <Link
+        to="/video"
         className="absolute top-3 right-3 text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded shadow"
       >
         Video
-      </a>
+      </Link>
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 tracking-tight">
         Encode Video
       </h1>
